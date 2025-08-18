@@ -1,0 +1,223 @@
+:root {
+    --primary-color: #2e7d32;
+    --secondary-color: #4caf50;
+    --accent-color: #8bc34a;
+    --text-color: #333;
+    --light-text: #f5f5f5;
+    --background: #f9f9f9;
+    --calendar-header: #388e3c;
+    --today-highlight: #ffeb3b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+header h2 {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    font-weight: 400;
+}
+
+.current-date {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.date-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.label {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.date-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.calendar-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+}
+
+.calendar-header button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.calendar-header button:hover {
+    background-color: var(--calendar-header);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-weight: 600;
+    padding: 10px;
+    color: var(--primary-color);
+}
+
+.calendar-day {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.calendar-day:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.calendar-day.empty {
+    background-color: transparent;
+    cursor: default;
+}
+
+.calendar-day.today {
+    background-color: var(--today-highlight);
+    font-weight: 600;
+}
+
+.converter {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.converter h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.converter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.converter-options select, 
+.converter-options input, 
+.converter-options button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+.converter-options button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.converter-options button:hover {
+    background-color: var(--calendar-header);
+}
+
+.nepali-inputs {
+    display: none;
+    gap: 10px;
+}
+
+#conversion-result {
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .current-date {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .date-box {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .converter-options {
+        flex-direction: column;
+    }
+    
+    .converter-options select, 
+    .converter-options input, 
+    .converter-options button {
+        width: 100%;
+    }
+}
+
+
