@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "web-push": "^3.6.7"
+  },
+  "name": "neplai_calendar",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pradev007/neplai_calendar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pradev007/neplai_calendar/issues"
+  },
+  "homepage": "https://github.com/pradev007/neplai_calendar#readme",
+  "description": ""
+}

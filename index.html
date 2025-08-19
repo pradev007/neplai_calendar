@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json">
     <title>Nepali Date and Calendar</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet" />
     <style>
@@ -348,6 +349,7 @@
             <h1>नेपाली मिति र पात्रो</h1>
             <h2>Nepali Date and Calendar</h2>
         </header>
+        <button id="enable-notifications" style="margin: 10px auto; display: block; padding: 10px 20px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Enable Notifications</button>
 
         <div class="current-date">
             <div class="date-box">
@@ -646,6 +648,12 @@
             setupCalendar();
             setupDateConverter();
             setInterval(updateCurrentDate, 60000);
+            // Add to the existing <script> tag, inside DOMContentLoaded
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered:', reg))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            }
         });
 
         function updateCurrentDate() {
@@ -910,6 +918,53 @@
             englishDateInput.style.display = 'block';
             nepaliInputs.style.display = 'none';
         }
+        // VAPID public key (replace with your generated key)
+        const VAPID_PUBLIC_KEY = 'BOnFVmQVdrFQkSjjiAeL38URIkISYcCsyiUnPEd2zfZORiImrIYUqYhDjR1g-D1l7qLE9qIRVEEtzoDRdkN3MrI';
+
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+        async function requestNotificationPermission() {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                console.log('Notification permission granted.');
+                await subscribeUserToPush();
+            } else {
+                console.log('Notification permission denied.');
+            }
+        }
+
+        async function subscribeUserToPush() {
+            try {
+                const registration = await navigator.serviceWorker.ready;
+                const subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+                });
+                // Send subscription to your server
+                await fetch('/subscribe', {
+                    method: 'POST',
+                    body: JSON.stringify(subscription),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                console.log('User subscribed to push notifications.');
+            } catch (error) {
+                console.error('Error subscribing to push:', error);
+            }
+        }
+
+        // Add event listener for the notification button
+        document.getElementById('enable-notifications').addEventListener('click', requestNotificationPermission);
     </script>
 </body>
 
